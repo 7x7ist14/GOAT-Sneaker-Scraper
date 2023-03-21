@@ -11,6 +11,7 @@ product_sizes = main.product_sizes_goat
 product_url_stockX = main.stockx_url
 product_url_hypeboost = main.product_url_hypeboost
 product_url_restocks = main.restocks_url
+product_url_sneakit = main.sneakit_product_url
 
 if not TOKEN:
     raise ValueError("The Bot-Token was not included in the config.py file")
@@ -49,6 +50,7 @@ async def on_message(message):
           product_url_stockX_output = product_url_stockX(SKU)
           product_url_hypeboost_output = product_url_stockX(SKU)
           product_url_restocks_output = product_url_restocks(SKU)
+          product_url_sneakit_output = product_url_sneakit(SKU)
 
           embed = discord.Embed(
             title=product_title_output,
@@ -72,7 +74,7 @@ async def on_message(message):
           )
           embed.add_field(
             name="Open Product on:",
-            value=f"[[StockX]]({product_url_stockX_output})      " f"[[GOAT]]({product_url_output})      " f"[[Restocks]]({product_url_restocks_output})      " f"[[Hypeboost]]({product_url_hypeboost_output})",
+            value=f"[[StockX]]({product_url_stockX_output})      " f"[[GOAT]]({product_url_output})      " f"[[Restocks]]({product_url_restocks_output})      " f"[[Hypeboost]]({product_url_hypeboost_output})      " f"[[Sneakit]]({product_url_sneakit_output})      ",
             inline=False
           )
           embed.set_footer(
@@ -82,7 +84,5 @@ async def on_message(message):
           await message.channel.send(embed=embed)
           print('Scraping Successful!')
 
-    else:
-      await message.channel.send("***wrong command used!***")
 
 bot.run(TOKEN)
