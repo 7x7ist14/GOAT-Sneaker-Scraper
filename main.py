@@ -102,57 +102,100 @@ def product_url_goat(SKU):
 
 
 def product_url_hypeboost(SKU):
-    url = "https://hypeboost.com/en/search/shop?keyword=" + SKU
+    try:
+        url = "https://hypeboost.com/en/search/shop?keyword=" + SKU
 
-    headers = {
-        "cookie": "country=eyJpdiI6ImlCRDJaRExPQkZYNTNlMmM0OWFEQVE9PSIsInZhbHVlIjoiTFRaRW01UW5wNUY2RjZnQzViWGlPYWRtYVRmbmxxMXpoRjNzODlZZUdIZmNLWjZSTFp0Q3htbTFuYUF4ZGkwVSIsIm1hYyI6IjQ0MzBlZTdkZmNhYjVhYmJhMDAzNDhlNjQ3MGU5NzQ1YThkOTk0ZDRkNzYxZGQzYzg0ODI0ZWYzZWZhODBlZGYiLCJ0YWciOiIifQ%253D%253D; currency=eyJpdiI6ImFlbkxaNHJyOHdUZlJFRlJ2dGlna0E9PSIsInZhbHVlIjoieEx2OE01VHhzOGZ1eFdsM09IVDFIZmR6R1hieHpDRDZScWoweVhqTDZjUzY2a3FFUmhQZGdPV2piaFN3OTViTCIsIm1hYyI6IjgzMTY0NDExNzljYjM1MzFmZmM5ZTBhOGY0MjU3ZWViMjA2NjBjYmUwMjg0MDFkMmUyYmJiNTVjYTUxZTk5MjMiLCJ0YWciOiIifQ%253D%253D",
-        "Content-Type": "application/json"
-    }
-
-    response = requests.request("GET", url, headers=headers)
-
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    for a in soup.find_all('a', href=True):
-        print('Scraped product url!')
-        return a['href']
-
-def stockx_url(SKU):
-    url = "https://stockx.com/api/browse?_search=" + SKU
-
-    headers = {
-            'accept': 'application/json',
-            'accept-encoding': 'utf-8',
-            'accept-language': 'en-DE',
-            'app-platform': 'Iron',
-            'referer': 'https://stockx.com/en-DE',
-            'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-origin',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-            'x-requested-with': 'XMLHttpRequest'
+        headers = {
+            "cookie": "country=eyJpdiI6ImlCRDJaRExPQkZYNTNlMmM0OWFEQVE9PSIsInZhbHVlIjoiTFRaRW01UW5wNUY2RjZnQzViWGlPYWRtYVRmbmxxMXpoRjNzODlZZUdIZmNLWjZSTFp0Q3htbTFuYUF4ZGkwVSIsIm1hYyI6IjQ0MzBlZTdkZmNhYjVhYmJhMDAzNDhlNjQ3MGU5NzQ1YThkOTk0ZDRkNzYxZGQzYzg0ODI0ZWYzZWZhODBlZGYiLCJ0YWciOiIifQ%253D%253D; currency=eyJpdiI6ImFlbkxaNHJyOHdUZlJFRlJ2dGlna0E9PSIsInZhbHVlIjoieEx2OE01VHhzOGZ1eFdsM09IVDFIZmR6R1hieHpDRDZScWoweVhqTDZjUzY2a3FFUmhQZGdPV2piaFN3OTViTCIsIm1hYyI6IjgzMTY0NDExNzljYjM1MzFmZmM5ZTBhOGY0MjU3ZWViMjA2NjBjYmUwMjg0MDFkMmUyYmJiNTVjYTUxZTk5MjMiLCJ0YWciOiIifQ%253D%253D",
+            "Content-Type": "application/json"
         }
 
-    request1 = requests.get(url=url, headers=headers)
+        response = requests.request("GET", url, headers=headers)
 
-    product_id = json.loads(request1.text)
-    product_id_final = product_id['Products'][0]['id']
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-    ID = product_id_final
-    url_stockX = "https://stockx.com/" + ID
-    print("Scraped StockX URL: " + url_stockX)
-    return url_stockX
+        for a in soup.find_all('a', href=True):
+            print('Scraped product url!')
+            return a['href']
+    except:
+        return ("https://hypeboost.com/")
+
+def stockx_url(SKU):
+    try:
+        url = "https://stockx.com/api/browse?_search=" + SKU
+
+        headers = {
+                'accept': 'application/json',
+                'accept-encoding': 'utf-8',
+                'accept-language': 'en-DE',
+                'app-platform': 'Iron',
+                'referer': 'https://stockx.com/en-DE',
+                'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'x-requested-with': 'XMLHttpRequest'
+            }
+
+        request1 = requests.get(url=url, headers=headers)
+
+        product_id = json.loads(request1.text)
+        product_id_final = product_id['Products'][0]['id']
+
+        ID = product_id_final
+        url_stockX = "https://stockx.com/" + ID
+        print("Scraped StockX URL: " + url_stockX)
+        return url_stockX
+    except:
+        return ("https://stockx.com/de-de")
 
 def restocks_url(SKU):
-    base_url = 'https://restocks.net/de/shop/search?q='
-    request_url = base_url + SKU + '&page=1&filters[0][range][price][gte]=1'
+    try:
+        base_url = 'https://restocks.net/de/shop/search?q='
+        request_url = base_url + SKU + '&page=1&filters[0][range][price][gte]=1'
 
-    r = requests.get(request_url)
+        r = requests.get(request_url)
 
-    json_restocks = json.loads(r.text)
-    product_url = json_restocks["data"][0]['slug']
-    print('Scraped Restocks URL: ' + product_url)
-    return product_url
+        json_restocks = json.loads(r.text)
+        product_url = json_restocks["data"][0]['slug']
+        print('Scraped Restocks URL: ' + product_url)
+        return product_url
+    except:
+        return ("https://restocks.net/de")
+
+
+def sneakit_url(SKU):
+  try:
+    produkt_code = SKU
+    global url
+    url = f"https://sneakit.com/search/products/{produkt_code}?query={produkt_code}&page=1"
+    print("Scraped Sneakit URL!", url)
+    return url
+  except:
+    return ("https://sneakit.com/")
+
+def sneakit_product_url(SKU):
+  try:
+    raw = sneakit_info(SKU)
+    slug = raw['data'][0]['slug']
+    p_url = "https://sneakit.com/product/" + slug
+    print("Scraped Sneakit Product URL:" + p_url)
+    return p_url
+  except:
+    return ("https://sneakit.com/")
+
+
+def sneakit_info(SKU):
+  try:
+    scraper = cloudscraper.create_scraper()
+    sneakit_url_r = sneakit_url(SKU)
+    r = scraper.get(sneakit_url_r)
+    global output
+    output = json.loads(r.text)
+    print("Scraped Sneakit info!")
+    return output
+  except:
+    return ("error")
